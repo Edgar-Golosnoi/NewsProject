@@ -1,10 +1,16 @@
 import express from 'express';
-import template from '../template';
+import { renderToString } from 'react-dom/server';
+import React from 'react';
+// import { Student } from '../../db/models';
+import Layout from '../components/Layout';
 
-const router = express.Router();
+const route = express.Router();
 
-router.get('/', (req, res) => {
-  res.send(template({ path: req.originalUrl }));
+route.get('/', async (req, res) => {
+  const initState = { path: req.originalUrl };
+  const html = renderToString(<Layout initState={initState} />);
+  res.write('<!DOCTYPE html>');
+  res.end(html);
 });
 
-export default router;
+export default route;
