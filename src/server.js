@@ -1,9 +1,9 @@
 import express from 'express';
-// import morgan from 'morgan';
+import morgan from 'morgan';
 import session from 'express-session';
 import store from 'session-file-store';
 import indexRouter from './routes/indexRouter';
-import apiRouter from './db/models';
+import apiRouter from './routes/apiRouter';
 
 require('dotenv').config();
 
