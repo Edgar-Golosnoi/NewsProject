@@ -1,37 +1,49 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import play from 'audio-play';
 import load from 'audio-loader';
 
-export default function Registration() {
+export default function Registration({ setAuthState }) {
+  const [input, setInput] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
   // const playHandler = async () => {
   //   const sound = await load('/sound/whoosh.mp3');
   //   play(sound);
   // };
+  const controlInpHandler = (e) => {
+    setInput((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-  // const [input, setInput] = useState({ username: '', password: '', repeat: '' });
-  // const changeHandler = (e) => setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // const signUpHandler = async (event) => {
-  //   event.preventDefault();
-  //   const response = await fetch('/registration', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(Object.fromEntries(new FormData(event.target))),
-  //   });
-  // };
+  const registrationInHandler = async (event) => {
+    event.preventDefault();
+    // console.log(input);
+
+    const response = await fetch('/api/auth/registration', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setAuthState(data);
+      navigate('/news');
+    }
+  };
 
   return (
     <div className="mx-auto mt-5" style={{ width: '400px' }}>
       <div style={{ height: '250px' }} />
-      <form className="container bg-secondary rounded-3 py-3 item" align="center">
-        {/* onSubmit={signUpHandler} */}
+      <form onSubmit={registrationInHandler} className="container bg-secondary rounded-3 py-3 item" align="center">
         <div className="mb-3">
-          <h2>Username</h2>
+          {/* <h2>Электронная почта</h2> */}
           <input
             // value={input.username}
-            // onChange={changeHandler}
+            onChange={controlInpHandler}
             type="text"
-            name="username"
+            name="email"
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
@@ -39,10 +51,10 @@ export default function Registration() {
           />
         </div>
         <div className="mb-3">
-          <h2>Password</h2>
+          <h2>Пароль</h2>
           <input
             // value={input.password}
-            // onChange={changeHandler}
+            onChange={controlInpHandler}
             type="password"
             name="password"
             className="form-control"
@@ -63,7 +75,7 @@ export default function Registration() {
           />
         </div> */}
         <div>
-          <button type="submit" className="btn btn-danger">Sign up!</button>
+          <button type="submit" className="btn btn-danger">Зарегистрироваться</button>
           {/* onClick={playHandler} */}
           <Link to="/" class="btn btn-outline-danger float-left">←Back to Auth</Link>
         </div>

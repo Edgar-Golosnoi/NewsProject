@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 import store from 'session-file-store';
 import indexRouter from './routes/indexRouter';
-import apiRouter from './db/models';
+import apiAuthRouter from './routes/apiAuthRouter';
 
 const PORT = process.env.SERVER_PORT || 3002;
 const app = express();
@@ -28,8 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session(sessionConfig));
 
+app.use('/api/auth', apiAuthRouter);
 app.use('/', indexRouter);
-app.use('/auth', apiRouter);
 
 app.listen(PORT, () => {
   console.log('server start on port ', PORT);

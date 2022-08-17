@@ -1,35 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import play from 'audio-play';
 import load from 'audio-loader';
 
-export default function AuthPage() {
+export default function AuthPage({ setAuthState }) {
+  const [input, setInput] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
   // const playHandler = async () => {
   //   const sound = await load('/sound/whoosh.mp3');
   //   play(sound);
   // };
+  const controlInpHandler = (e) => {
+    setInput((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-  // const signInHandler = async (event) => {
-  //   event.preventDefault();
-  //   const response = await fetch('/auth', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(Object.fromEntries(new FormData(event.target))),
-  //   });
-
-  // if (response.ok) {
-  //   setHeroesState((prev) => prev.filter((el) => el.id !== anyProp.id));
-  // }
-  // };
+  const signInHandler = async (event) => {
+    event.preventDefault();
+    console.log(input);
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setAuthState(data);
+      navigate('/news');
+    }
+  };
 
   return (
     <div className="mx-auto mt-5" style={{ width: '400px' }}>
       <div style={{ height: '250px' }} />
-      <form className="container bg-secondary rounded-3 py-3 item" align="center">
-        {/* onSubmit={signInHandler} */}
+      <form onSubmit={signInHandler} className="container bg-secondary rounded-3 py-3 item" align="center">
+
         <div className="mb-3">
-          <h2>Username</h2>
+          <h2>Электронная почта</h2>
           <input
+            onChange={controlInpHandler}
             type="text"
             name="user"
             className="form-control"
@@ -39,8 +50,9 @@ export default function AuthPage() {
           />
         </div>
         <div className="mb-3">
-          <h2>Password</h2>
+          <h2>Пароль</h2>
           <input
+            onChange={controlInpHandler}
             type="password"
             name="password"
             className="form-control"
@@ -48,13 +60,13 @@ export default function AuthPage() {
             placeholder="Your Password"
           />
         </div>
-        <button type="submit" className="btn btn-danger">Sign in!</button>
+        <button type="submit" className="btn btn-danger">Авторизироваться</button>
 
         <div className="mx-auto mt-5">
-          <h2>Don't register yet?</h2>
+          <h2>Вы еще не регистрировались?</h2>
         </div>
         {/* onClick={playHandler} */}
-        <Link to="/registration" className="btn btn-danger">Registration</Link>
+        <Link to="/registration" className="btn btn-danger">Регистрация</Link>
       </form>
     </div>
   );

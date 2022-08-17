@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/registration', async (req, res) => {
   const { email, password } = req.body;
-//   console.log(email, password);
+  //   console.log(email, password);
   const hashPassword = await bcrypt.hash(password, 5);
   try {
     const user = await User.findOne({ where: { email } });
