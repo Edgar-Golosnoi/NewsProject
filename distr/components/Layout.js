@@ -31,6 +31,9 @@ function Layout({
     rel: "stylesheet",
     integrity: "sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor",
     crossOrigin: "anonymous"
+  }), /*#__PURE__*/_react.default.createElement("link", {
+    rel: "stylesheet",
+    href: "/stylesheets/application.css"
   }), /*#__PURE__*/_react.default.createElement("script", {
     type: "text/javascript",
     dangerouslySetInnerHTML: {
