@@ -1,5 +1,5 @@
 import express from 'express';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import session from 'express-session';
 import store from 'session-file-store';
 import indexRouter from './routes/indexRouter';
