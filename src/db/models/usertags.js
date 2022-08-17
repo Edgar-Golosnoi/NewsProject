@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   UserTags.init({
     userId: DataTypes.INTEGER,
     tagId: DataTypes.INTEGER,
-    favorite: DataTypes.BOOLEAN,
+    isFavorite: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'UserTags',

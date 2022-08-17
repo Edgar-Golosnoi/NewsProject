@@ -25,7 +25,7 @@ module.exports = {
         onDelete: 'cascade',
         allowNull: false,
       },
-      favorite: {
+      isFavorite: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {
