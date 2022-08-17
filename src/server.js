@@ -1,10 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
-import session from 'express-session';
-import store from 'session-file-store';
+// import session from 'express-session';
+// import store from 'session-file-store';
 import indexRouter from './routes/indexRouter';
 
-const PORT = process.env.SERVER_PORT || 3002;
+require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.static('public'));
